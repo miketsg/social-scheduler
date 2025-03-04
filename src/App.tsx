@@ -5,6 +5,7 @@ import CalendarView from './components/CalendarView';
 import { Post } from './types';
 import Sidebar from './components/Sidebar';
 import GenerateImage from './components/GenerateImage';
+import GenerateVideo from './components/GenerateVideo';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>(() => {
@@ -206,6 +207,8 @@ function App() {
             </>
           ) : activeTab === 'image' ? (
             <GenerateImage />
+          ) : activeTab === 'video' ? (
+            <GenerateVideo />
           ) : (
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-4">Video Generation</h2>
