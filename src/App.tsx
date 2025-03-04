@@ -4,6 +4,7 @@ import PostForm from './components/PostForm';
 import CalendarView from './components/CalendarView';
 import { Post } from './types';
 import Sidebar from './components/Sidebar';
+import GenerateImage from './components/GenerateImage';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>(() => {
@@ -204,10 +205,7 @@ function App() {
               )}
             </>
           ) : activeTab === 'image' ? (
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">Image Generation</h2>
-              <p className="text-gray-600">Image generation feature coming soon...</p>
-            </div>
+            <GenerateImage />
           ) : (
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-4">Video Generation</h2>
