@@ -6,4 +6,5 @@ export interface Post {
   startDate: string;
   platforms: string[];
   postTime: string;
+  image?: string;
 }

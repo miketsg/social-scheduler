@@ -66,7 +66,7 @@ const GenerateVideo: React.FC = () => {
           {/* Left side - Upload controls */}
           <div className="p-6 bg-white rounded-lg shadow-sm">
             <div className="mb-6">
-              <h3 className="mb-4 text-sm font-medium text-gray-700">Upload Images</h3>
+              <h3 className="mb-4 text-sm font-medium text-gray-700">Upload multiple images</h3>
               <div className="grid grid-cols-3 gap-4 mb-4">
                 {images.map((image, index) => (
                   <div key={index} className="relative group">

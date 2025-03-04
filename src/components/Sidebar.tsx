@@ -15,8 +15,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, isOpen, onClo
   ];
 
   const toolsMenuItems = [
-    { id: 'image', icon: Image, label: 'AI Image Generator' },
-    { id: 'video', icon: Video, label: 'Video Creator' },
+    { id: 'image', icon: Image, label: 'Image Generator' },
+    { id: 'video', icon: Video, label: 'Video Generator' },
   ];
 
   const renderMenuItem = (item: { id: string; icon: any; label: string }) => (

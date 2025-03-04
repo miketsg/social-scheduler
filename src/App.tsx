@@ -19,6 +19,7 @@ function App() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [activeTab, setActiveTab] = useState('schedule');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [defaultDate, setDefaultDate] = useState<string>('');
 
   useEffect(() => {
     localStorage.setItem('posts', JSON.stringify(posts));
@@ -69,11 +70,13 @@ function App() {
   const handleDayClick = (date: string) => {
     setEditingPost(null);
     setIsFormOpen(true);
+    setDefaultDate(date);
   };
 
   const handleNewPost = () => {
     setEditingPost(null);
     setIsFormOpen(true);
+    setDefaultDate(new Date().toISOString().split('T')[0]);
   };
 
   const handleEventClick = (post: Post) => {
@@ -109,8 +112,10 @@ function App() {
                 onCancel={() => {
                   setIsFormOpen(false);
                   setEditingPost(null);
+                  setDefaultDate('');
                 }}
                 initialData={editingPost}
+                defaultDate={defaultDate}
               />
             ) : activeTab === 'schedule' ? (
               <>
