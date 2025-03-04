@@ -37,4 +37,4 @@ export const VideoComposition: React.FC<VideoCompositionProps> = ({ images, audi
       <Audio src={audio} />
     </AbsoluteFill>
   );
-}; 
+};

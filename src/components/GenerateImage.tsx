@@ -116,7 +116,7 @@ const GenerateImage: React.FC = () => {
               ) : (
                 <div className="flex items-center justify-center flex-1 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50">
                   <p className="text-center text-gray-500">
-                    Generated image will appear here
+                   Image generation might take 30s - 1 minute
                   </p>
                 </div>
               )}
