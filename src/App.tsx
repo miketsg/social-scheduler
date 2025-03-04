@@ -198,7 +198,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-            
+
               </>
             ) : activeTab === 'image' ? (
               <GenerateImage />
