@@ -119,19 +119,7 @@ function App() {
               />
             ) : activeTab === 'schedule' ? (
               <>
-                {posts.length === 0 ? (
-                  <div className="py-16 text-center bg-white shadow-sm rounded-xl">
-                    <Calendar size={64} className="mx-auto mb-6 text-gray-400" />
-                    <h3 className="mb-3 text-2xl font-medium text-gray-700">No posts planned yet</h3>
-                    <p className="mb-8 text-gray-500">Start by creating your first content plan</p>
-                    <button
-                      onClick={handleNewPost}
-                      className="flex items-center px-6 py-3 mx-auto font-medium text-white transition-colors bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700"
-                    >
-                      <Plus size={20} className="mr-2" /> Create Your First Post
-                    </button>
-                  </div>
-                ) : (
+
                   <div className="space-y-6">
                     <div className="p-6 bg-white shadow-sm rounded-xl">
                       <div className="flex items-center justify-between mb-6">
@@ -210,7 +198,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                )}
+            
               </>
             ) : activeTab === 'image' ? (
               <GenerateImage />
