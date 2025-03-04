@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { X, Facebook, Twitter, Instagram, Linkedin, Wand2 } from 'lucide-react';
 import { Post } from '../types';
+import { useHashtagGenerator } from '../hooks/useHashtagGenerator';
 
 interface PostFormProps {
   onSubmit: (post: Post) => void;
@@ -29,6 +30,8 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
     { id: 'instagram', name: 'Instagram', icon: Instagram },
     { id: 'linkedin', name: 'LinkedIn', icon: Linkedin },
   ];
+
+  const { isGenerating, generateHashtags, error } = useHashtagGenerator();
 
   useEffect(() => {
     if (initialData) {
@@ -61,6 +64,21 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
     });
   };
 
+  const handleGenerateHashtags = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!description) {
+      alert('Please add a description first');
+      return;
+    }
+
+    try {
+      const hashtags = await generateHashtags(description);
+      setDescription(prev => `${prev}\n\n${hashtags}`);
+    } catch (error) {
+      alert('Failed to generate hashtags. Please try again.');
+    }
+  };
+
   return (
     <div className="p-6 mb-6 bg-white rounded-lg shadow-sm">
       <div className="flex items-center justify-between mb-4">
@@ -74,57 +92,9 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
           <X size={20} />
         </button>
       </div>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-700">
-            Title *
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label htmlFor="description" className="block mb-1 text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            rows={3}
-          />
-        </div>
-        
-        <div className="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
 
-          
-          <div>
-            <label htmlFor="frequency" className="block mb-1 text-sm font-medium text-gray-700">
-              Frequency
-            </label>
-            <select
-              id="frequency"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value as any)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <option value="once">Once</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-            </select>
-          </div>
-        </div>
-        
-        <div className="mb-6">
+      <form onSubmit={handleSubmit}>
+      <div className="mb-6">
           <label className="block mb-2 text-sm font-medium text-gray-700">
             Social Media Platforms
           </label>
@@ -153,7 +123,78 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
             ))}
           </div>
         </div>
+
+
+        <div className="mb-4">
+          <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-700">
+            Title *
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
         
+        <div className="mb-4">
+          <label htmlFor="description" className="block mb-1 text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            rows={3}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+
+          
+          <div>
+            <label htmlFor="frequency" className="block mb-1 text-sm font-medium text-gray-700">
+              Frequency
+            </label>
+            <select
+              id="frequency"
+              value={frequency}
+              onChange={(e) => setFrequency(e.target.value as any)}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="once">Once</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+
+          <div>
+          <label htmlFor="frequency" className="block mb-1 text-sm font-medium text-gray-700">
+              Captions
+            </label>
+          <button
+            onClick={handleGenerateHashtags}
+            disabled={isGenerating}
+            className={`w-full px-4 py-2 text-white rounded-md transition-colors flex items-center justify-center gap-2 ${
+              isGenerating 
+                ? 'bg-indigo-400 cursor-not-allowed' 
+                : 'bg-indigo-600 hover:bg-indigo-700'
+            }`}
+          >
+            <Wand2 size={16} />
+            {isGenerating ? 'Generating...' : 'Generate hashtags'}
+          </button>
+          {error && (
+            <p className="mt-2 text-sm text-red-600">{error}</p>
+          )}
+          </div>
+        </div>
+        
+
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
             <label htmlFor="startDate" className="block mb-1 text-sm font-medium text-gray-700">
