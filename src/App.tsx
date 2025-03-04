@@ -62,6 +62,24 @@ function App() {
     }
   };
 
+  const handleDayClick = (date: string) => {
+    setEditingPost(null);
+    setIsFormOpen(true);
+    // Pre-fill the date in the form
+    const defaultPost: Partial<Post> = {
+      startDate: date,
+      postTime: '12:00',
+      platforms: [],
+      frequency: 'once'
+    };
+    setEditingPost(defaultPost as Post);
+  };
+
+  const handleEventClick = (post: Post) => {
+    setEditingPost(post);
+    setIsFormOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
@@ -140,6 +158,8 @@ function App() {
                       posts={posts} 
                       currentMonth={currentMonth} 
                       currentYear={currentYear}
+                      onDayClick={handleDayClick}
+                      onEventClick={handleEventClick}
                     />
                   </div>
                   

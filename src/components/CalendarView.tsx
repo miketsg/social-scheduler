@@ -1,13 +1,22 @@
 import React from 'react';
 import { Post } from '../types';
+import { Plus } from 'lucide-react';
 
 interface CalendarViewProps {
   posts: Post[];
   currentMonth: number;
   currentYear: number;
+  onDayClick: (date: string) => void;
+  onEventClick: (post: Post) => void;
 }
 
-const CalendarView: React.FC<CalendarViewProps> = ({ posts, currentMonth, currentYear }) => {
+const CalendarView: React.FC<CalendarViewProps> = ({ 
+  posts, 
+  currentMonth, 
+  currentYear,
+  onDayClick,
+  onEventClick
+}) => {
   // Get days in month
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   
@@ -93,28 +102,55 @@ const CalendarView: React.FC<CalendarViewProps> = ({ posts, currentMonth, curren
             currentMonth === new Date().getMonth() && 
             currentYear === new Date().getFullYear();
           
+          const dateString = new Date(currentYear, currentMonth, day).toISOString().split('T')[0];
+          
           return (
             <div 
               key={`day-${day}`} 
-              className={`h-24 border rounded-md p-1 overflow-hidden ${
-                isToday ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200'
-              }`}
+              className={`h-24 border rounded-md p-1 overflow-hidden relative group cursor-pointer
+                ${isToday ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200'}
+                hover:border-indigo-300 hover:shadow-sm transition-all
+              `}
+              onClick={(e) => {
+                // Only trigger new post if clicking empty space
+                if ((e.target as HTMLElement).closest('.event-item')) return;
+                onDayClick(dateString);
+              }}
             >
               <div className={`text-right text-sm mb-1 ${isToday ? 'font-bold' : ''}`}>
                 {day}
               </div>
+              
+              {/* Add post button - shows on hover */}
+              <button 
+                className="absolute top-1 left-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDayClick(dateString);
+                }}
+              >
+                <Plus size={16} className="text-indigo-600" />
+              </button>
+
               <div className="overflow-y-auto h-16">
                 {postsForDay.map(post => (
                   <div 
                     key={`${post.id}-${day}`} 
-                    className="text-xs p-1 mb-1 rounded truncate"
+                    className="event-item text-xs p-1 mb-1 rounded truncate cursor-pointer hover:opacity-75 transition-opacity"
                     style={{
                       backgroundColor: stringToColor(post.category + post.title, 0.2),
                       color: stringToColor(post.category + post.title, 1)
                     }}
                     title={`${post.title} - ${post.description}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEventClick(post);
+                    }}
                   >
-                    {post.title}
+                    <div className="flex items-center gap-1">
+                      <span>{post.postTime}</span>
+                      <span className="truncate">{post.title}</span>
+                    </div>
                   </div>
                 ))}
               </div>

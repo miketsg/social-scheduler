@@ -62,8 +62,8 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-      <div className="flex justify-between items-center mb-4">
+    <div className="p-6 mb-6 bg-white rounded-lg shadow-sm">
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">
           {initialData ? 'Edit Post' : 'Create New Post'}
         </h2>
@@ -77,7 +77,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
       
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-700">
             Title *
           </label>
           <input
@@ -91,7 +91,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
         </div>
         
         <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="description" className="block mb-1 text-sm font-medium text-gray-700">
             Description
           </label>
           <textarea
@@ -103,23 +103,11 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
           />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-              Category
-            </label>
-            <input
-              type="text"
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="e.g., Blog, Social Media, Newsletter"
-            />
-          </div>
+        <div className="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+
           
           <div>
-            <label htmlFor="frequency" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="frequency" className="block mb-1 text-sm font-medium text-gray-700">
               Frequency
             </label>
             <select
@@ -137,7 +125,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
         </div>
         
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block mb-2 text-sm font-medium text-gray-700">
             Social Media Platforms
           </label>
           <div className="flex space-x-4">
@@ -168,7 +156,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
         
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="startDate" className="block mb-1 text-sm font-medium text-gray-700">
               Date *
             </label>
             <input
@@ -182,7 +170,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
           </div>
           
           <div>
-            <label htmlFor="postTime" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="postTime" className="block mb-1 text-sm font-medium text-gray-700">
               Time *
             </label>
             <input
@@ -200,13 +188,13 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit, onCancel, initialData }) 
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            className="px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
           >
             {initialData ? 'Update' : 'Create'}
           </button>
